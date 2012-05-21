@@ -41,23 +41,37 @@ class playerCar(car):
     
     def __init__(self, mapWidth, mapHeight):
         super(playerCar, self).__init__(mapWidth, mapHeight);
-        self.posX = mapWidth / 2 - 15
         self.currentSprite = 1
-        self.posY = mapHeight - (2 * (PLAYER_SPRITE_COORDS[self.currentSprite]["bottom"] - PLAYER_SPRITE_COORDS[self.currentSprite]["top"])) - 10
+        self.posX = mapWidth / 2 - 15
+        self.posY = mapHeight - self._getHeight(self.currentSprite) - 10
+
+    def _getWidth(self, spriteIndex):
+        return 2 * (PLAYER_SPRITE_COORDS[spriteIndex]["right"] - PLAYER_SPRITE_COORDS[spriteIndex]["left"])
+        
+    def _getHeight(self, spriteIndex):
+        return 2 * (PLAYER_SPRITE_COORDS[spriteIndex]["bottom"] - PLAYER_SPRITE_COORDS[spriteIndex]["top"])
 
     def move(self, key):
         if key == 'left':
-            self.posX = self.posX - 5
-            self.currentSprite = 0
-            if self.currentSprite == 1: #this is to avoid "moving" to the right when changing to the big sprite
-                self.posX = self.posX - (2 * ((PLAYER_SPRITE_COORDS[0]["right"] - PLAYER_SPRITE_COORDS[0]["left"]) - (PLAYER_SPRITE_COORDS[1]["right"] - PLAYER_SPRITE_COORDS[1]["left"])))
+            if self.posX < 5: #Don't go out of the map
+                self.posX = 0
+            else:
+                if self.currentSprite == 1: #This is to avoid "moving" to the right when changing to the big sprite from the small one
+                    self.posX = self.posX - (self._getWidth(0) - self._getWidth(1)) - 5
+                else:
+                    self.posX = self.posX - 5 #move to the left
+                self.currentSprite = 0
+                
         elif key == 'right':
-            self.posX = self.posX +5
-            self.currentSprite = 2
+            if self.posX > self.mapWidth - self._getWidth(self.currentSprite) - 5: #Don't go out of the map
+                self.posX = self.mapWidth - self._getWidth(self.currentSprite)
+            else: #Move to the right
+                self.posX = self.posX +5
+                self.currentSprite = 2
         
     def stopMoving(self, key):
-        pressedKeys = pygame.key.get_pressed()
-        if (pressedKeys[276] == 0 and key == 'left') or (pressedKeys[275] == 0 and key == 'right'):
+        if key == 'left' or key == 'right':
+            self.posX = self.posX + (self._getWidth(self.currentSprite) - self._getWidth(1)) #Center the new sprite in the old one
             self.currentSprite = 1
 
 
@@ -72,7 +86,7 @@ class oponentCar(car):
         self.brakingTime = 0
         self.speed = random.randint(8*level, 5*level+50)
         self.currentSprite = random.randint(0, 6)
-
+    
     def move(self):
         self.posY = self.posY + (self.mapHeight / (5*(3*self.speed-380)/(-8)))
         
@@ -81,4 +95,3 @@ class oponentCar(car):
     
     def setBrakingTime(self, brakingTime):
         self.brakingTime = brakingTime
-        
