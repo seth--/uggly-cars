@@ -17,7 +17,6 @@ MOVE_OPONENT_TIMER = pygame.USEREVENT + 2
 pygame.time.set_timer(CREATE_OPONENT_TIMER, 500)
 pygame.time.set_timer(MOVE_OPONENT_TIMER, 2) 
 
-LEVEL_MAX = 9
 CARS_IN_LEVEL = 20
 level = 1
 untilLevelUp = CARS_IN_LEVEL
@@ -35,7 +34,6 @@ while 1:
             player.stopMoving(pygame.key.name(event.key))
             
         elif event.type == CREATE_OPONENT_TIMER:
-            print oponents
             if None in oponents:
                 oponents.remove(None)
             if untilLevelUp <= 0:
