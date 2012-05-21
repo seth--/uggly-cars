@@ -57,13 +57,11 @@ while 1:
 
 
     screen.fill(black)
-    #pygame.draw.rect(screen, (200,50,50), (player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight())) #old car
-    playerRect = screen.blit(PLAYER_SPRITES[player.getCurrentSprite()], (player.getPosX(), player.getPosY(), player.getWidth(), player.getHeight()))    
+    playerRect = screen.blit(PLAYER_SPRITES[player.getCurrentSprite()], (player.getPosX(), player.getPosY()))    
     
     for oponent in oponents:
         if oponent is not None:
-            #pygame.draw.rect(screen, (50,200,50), (oponent.getPosX(), oponent.getPosY(), oponent.getWidth(), oponent.getHeight())) #old car
-            oponentRect = screen.blit(OPONENT_SPRITES[oponent.getCurrentSprite()],(oponent.getPosX(), oponent.getPosY(), oponent.getWidth(), oponent.getHeight()))
+            oponentRect = screen.blit(OPONENT_SPRITES[oponent.getCurrentSprite()],(oponent.getPosX(), oponent.getPosY()))
             if playerRect.colliderect(oponentRect):
                 for i in range(1,10):
                     for color in ((255,0,0), black):
