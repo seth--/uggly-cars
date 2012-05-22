@@ -29,9 +29,6 @@ class car(object):
 
     def getPosY(self):
         return self.posY
-
-    def getSpeed(self):
-        return self.speed
     
     def getCurrentSprite(self):
         return self.currentSprite
@@ -47,9 +44,10 @@ class playerCar(car):
 
     def _getWidth(self, spriteIndex):
         return 2 * (PLAYER_SPRITE_COORDS[spriteIndex]["right"] - PLAYER_SPRITE_COORDS[spriteIndex]["left"])
-        
+
     def _getHeight(self, spriteIndex):
         return 2 * (PLAYER_SPRITE_COORDS[spriteIndex]["bottom"] - PLAYER_SPRITE_COORDS[spriteIndex]["top"])
+
 
     def move(self, key):
         if key == 'left':
@@ -77,21 +75,30 @@ class playerCar(car):
 
 class oponentCar(car):
     
-    def __init__(self, width, height, spritesImage, level):
-        super(oponentCar, self).__init__(width, height);
-        self.height = 70
-        self.width = 30
-        self.posX = random.randint(0, width - self.width)
-        self.posY = 0 - self.height + 100
+    def __init__(self, mapWidth, mapHeight, spritesImage, level):
+        super(oponentCar, self).__init__(mapWidth, mapHeight);
+        self.currentSprite = random.randint(0, len(OPONENT_SPRITE_COORDS))
+        self.posX = random.randint(0, mapWidth - self._getWidth(self.currentSprite))
+        self.posY = 0 - self._getHeight(self.currentSprite) + 100
         self.brakingTime = 0
-        self.speed = random.randint(8*level, 5*level+50)
-        self.currentSprite = random.randint(0, 6)
-    
-    def move(self):
-        self.posY = self.posY + (self.mapHeight / (5*(3*self.speed-380)/(-8)))
+        self.speed = random.randint(8 * level, 5 * level + 50)
         
+    def _getWidth(self, spriteIndex):
+        return 2 * (OPONENT_SPRITE_COORDS[spriteIndex]["right"] - OPONENT_SPRITE_COORDS[spriteIndex]["left"])
+
+    def _getHeight(self, spriteIndex):
+        return 2 * (OPONENT_SPRITE_COORDS[spriteIndex]["bottom"] - OPONENT_SPRITE_COORDS[spriteIndex]["top"])
+        
+    def getSpeed(self):
+        return self.speed
+    
     def getBrakingTime(self):
         return self.brakingTime
     
     def setBrakingTime(self, brakingTime):
         self.brakingTime = brakingTime
+    
+    
+    def move(self):
+        self.posY = self.posY + (self.mapHeight / (5 * (3 * self.speed - 380) / (-8)))
+    
