@@ -79,7 +79,7 @@ class oponentCar(car):
         super(oponentCar, self).__init__(mapWidth, mapHeight);
         self.currentSprite = random.randint(0, len(OPONENT_SPRITE_COORDS))
         self.posX = random.randint(0, mapWidth - self._getWidth(self.currentSprite))
-        self.posY = 0 - self._getHeight(self.currentSprite) + 100
+        self.posY = 0 - self._getHeight(self.currentSprite)
         self.brakingTime = 0
         self.speed = random.randint(8 * level, 5 * level + 50)
         
