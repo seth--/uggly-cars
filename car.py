@@ -77,6 +77,7 @@ class oponentCar(car):
     
     def __init__(self, mapWidth, mapHeight, spritesImage, level):
         super(oponentCar, self).__init__(mapWidth, mapHeight);
+        print len(OPONENT_SPRITE_COORDS), OPONENT_SPRITE_COORDS ##
         self.currentSprite = random.randrange(0, len(OPONENT_SPRITE_COORDS))
         self.posX = random.randint(0, mapWidth - self._getWidth(self.currentSprite))
         self.posY = 0 - self._getHeight(self.currentSprite)

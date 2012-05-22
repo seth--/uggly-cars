@@ -35,10 +35,10 @@ while 1:
         elif event.type == CREATE_OPONENT_TIMER:
             if None in oponents:
                 oponents.remove(None)
-            if untilLevelUp <= 0:
+            if untilLevelUp <= 0: # Level up
                 untilLevelUp = CARS_IN_LEVEL
                 level = level +1
-                maxOponents = maxOponents + 5
+                maxOponents = maxOponents + 3
             elif (len(oponents) < maxOponents) and (random.randint(0, 1) == 0):
                 oponents.append(oponentCar(width, height, masterImage, level))
         
