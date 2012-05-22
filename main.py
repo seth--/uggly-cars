@@ -21,7 +21,6 @@ CARS_IN_LEVEL = 20
 level = 1
 untilLevelUp = CARS_IN_LEVEL
 
-
 while 1:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -51,7 +50,7 @@ while 1:
                         oponent.move()
                         if oponent.getPosY() > height:
                             oponents[oponents.index(oponent)] = None
-                            untilLevelUp = untilLevelUp - 1                                
+                            untilLevelUp = untilLevelUp - 1
                     else:
                         oponent.setBrakingTime(oponent.getBrakingTime() + 1)
 
